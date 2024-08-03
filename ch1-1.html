@@ -227,39 +227,44 @@
         }
 
         function submitExam() {
-            saveAnswer();
-            let score = 0;
-            let correctAnswers = [];
-            selectedQuestions.forEach((question, index) => {
-                if (userAnswers[index] === question.answer) {
-                    score++;
-                } else {
-                    correctAnswers.push({ question: question.question, correctAnswer: question.answer, userAnswer: userAnswers[index] });
-                }
+    saveAnswer();
+    let score = 0;
+    let correctAnswers = [];
+    selectedQuestions.forEach((question, index) => {
+        if (userAnswers[index] === question.answer) {
+            score++;
+        } else {
+            correctAnswers.push({
+                question: question.question,
+                correctAnswer: question.answer,
+                userAnswer: userAnswers[index] === null ? "No answer" : userAnswers[index]
             });
-
-            const resultContainer = document.getElementById('resultContainer');
-            resultContainer.innerHTML = `<div class="result">You scored ${score} out of ${selectedQuestions.length}</div>`;
-
-            if (score === selectedQuestions.length) {
-                resultContainer.innerHTML += '<div class="result">Congratulations! You got a perfect score!</div>';
-            } else {
-                correctAnswers.forEach(({ question, correctAnswer, userAnswer }) => {
-                    resultContainer.innerHTML += `
-                        <div class="result">
-                            <p>Question: ${question}</p>
-                            <p>Correct Answer: ${correctAnswer}</p>
-                            <p>Your Answer: ${userAnswer}</p>
-                        </div>
-                    `;
-                });
-            }
-
-            document.getElementById('prevBtn').style.display = 'none';
-            document.getElementById('nextBtn').style.display = 'none';
-            document.getElementById('submitBtn').style.display = 'none';
-            document.getElementById('homeContainer').style.display = 'block';
         }
+    });
+
+    const resultContainer = document.getElementById('resultContainer');
+    resultContainer.innerHTML = `<div class="result">You scored ${score} out of ${selectedQuestions.length}</div>`;
+
+    if (score === selectedQuestions.length) {
+        resultContainer.innerHTML += '<div class="result">Congratulations! You got a perfect score!</div>';
+    } else {
+        correctAnswers.forEach(({ question, correctAnswer, userAnswer }) => {
+            resultContainer.innerHTML += `
+                <div class="result">
+                    <p>Question: ${question}</p>
+                    <p>Correct Answer: ${correctAnswer}</p>
+                    <p>Your Answer: ${userAnswer}</p>
+                </div>
+            `;
+        });
+    }
+
+    document.getElementById('prevBtn').style.display = 'none';
+    document.getElementById('nextBtn').style.display = 'none';
+    document.getElementById('submitBtn').style.display = 'none';
+    document.getElementById('homeContainer').style.display = 'block';
+}
+
     </script>
 </body>
 </html>
